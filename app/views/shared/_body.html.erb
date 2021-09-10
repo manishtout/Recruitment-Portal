@@ -1,0 +1,21 @@
+<%=form_with model: @candidate do |candidate|%>
+  <% if @candidate.errors.any?%>
+  <h3> Errors </h3>
+  <ul>
+    <% @candidate.errors.full_messages.each do |message|%>
+      <li><%= message%></li>
+    <% end %>
+  </ul>  
+  <% end %>
+
+  <%= candidate.label :name%>
+  <%= candidate.text_field :name%><br><br>
+  <%= candidate.label :email%>
+  <%= candidate.text_field :email%><br><br>
+  <%= candidate.label :passout_year%>
+  <%= candidate.text_field :passout_year%><br><br>
+  <%= candidate.label :phone_number%>
+  <%= candidate.text_field :phone_number%><br><br>
+  
+  <%= candidate.submit "Add a New Candidate"%>
+<% end %>  
