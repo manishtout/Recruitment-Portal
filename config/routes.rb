@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   resources :candidates
   resources :reports
   root to: "users#homepage"
+
 end

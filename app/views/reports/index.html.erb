@@ -1,10 +1,9 @@
-
 <h3>Reports</h3>
 
 <table>
   <thead>
     <tr>
-      <th>Interview_round</th>
+      <th>Interview_number</th>
       <th>Status</th>
       <th>Interviewer_name</th>
       <th>Feedback</th>
@@ -14,7 +13,7 @@
   </thead>
 
   <tbody>
-    <% @report.each do |can| %>
+    <% @reports.each do |can| %>
       <tr>
         <td><%= can.interview_number %></td>
         <td><%= can.status %></td>     

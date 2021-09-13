@@ -1,27 +1,27 @@
 class ReportsController < ApplicationController
 
-  def index
-    @reports = Report.all
-  end
-
   def show
-    @report = Report.find(params[:id])
+    @report = Report.where(candidate_id: params[:id])    
   end
 
   def new
     @report = Report.new
+    $candidate = params[:candidate_id]
   end
 
   def create
     @report = Report.new(report_params)
-    @report = @candidate.id
+    @report.candidate_id = $candidate
     if @report.save
-      redirect_to root_path
+      redirect_to candidates_path
+    else
+      render "new"
+    end 
   end
 
   private
 
   def report_params
-    params.require(:reports).permit(:status, :interview_number, :feedback, :interviewer_name, :candidate_it)
+    params.require(:report).permit(:status, :interview_number, :feedback, :interviewer_name)
   end
 end

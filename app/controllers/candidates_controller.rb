@@ -42,7 +42,7 @@ class CandidatesController < ApplicationController
     end
   end
 
-  private
+  private  
 
   def candidate_params
     params.require(:candidate).permit(:name, :email, :passout_year, :phone_number)

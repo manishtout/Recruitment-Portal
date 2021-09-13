@@ -14,9 +14,10 @@
       <tr>
         <td><%= can.name %></td>
         <td><%= can.email %></td>        
-        <td><%= link_to "Show", can %></td>
+        <td><%= link_to "Show", candidate_path(can.id) %></td>
         <td><%= link_to "Edit", edit_candidate_path(can) %></td>
         <td><%= link_to "Destroy", can, method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <td><%= link_to "Create New Report", new_report_path(:candidate_id => can.id)%></td>
       </tr>
     <% end %>
   </tbody>
@@ -25,3 +26,4 @@
 <br>
 
 <%= link_to "New candidate", new_candidate_path %>
+
