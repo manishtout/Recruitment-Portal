@@ -1,37 +1,96 @@
-<h3>Candidate</h3>
-<table>
+<div class="row">
+	<div class="col-md-6">
+		<div class="row">
+			<div class="col-md-6">
+				
+				<%= image_tag @candidate.avatar.variant(resize_to_limit: [250,280])%>
+			</div>
+		
 
-	<thead>
-		<tr>
-				<th>Title</th>
-				<th scope="col">Value</th>
-		</tr>
-	</thead>
-
-	<tbody>
-		<tr>
-				<th scope="row">Name</th>
-				<td><%= @candidate.name %></td>
-		</tr>
-		<tr>
-				<th scope="row">Email</th>
-				<td><%= @candidate.email %></td>
-		</tr>
-		<tr>
-				<th scope="row">Passout Year</th>
-				<td><%= @candidate.passout_year %></td>
-		</tr>
-		<tr>
-				<th scope="row">Phone Number</th>
-				<td><%= @candidate.phone_number %></td>
-		</tr>
-		<tr>
-				<th scope="row">User-id</th>
-				<td><%= @candidate.user_id %></td>
-		</tr>
-	</tbody>
+			<div class="col-md-6">
+				<h3><%= @candidate.name %></h3>
+				<%= @candidate.email %><br>
+				Passout Year: <%= @candidate.passout_year %><br>
+				Phone Number: <%= @candidate.phone_number %><br>
+				<% unless @candidate.document_pdf.blank?%>
+					<%= link_to 'Resume', @candidate.document_pdf, target: :_blank %>
+				<% end %>
+			</div>
+		</div>	
+		<div class="row">	
+			<div class="col-md-6">
+				
+			</div>
+			<div class="col-md-6">
+				
+			</div>	
+		</div>	
+		<div class="row">	
+			<div class="col-md-6">
+				
+			</div>
+			<div class="col-md-6">
+				
+			</div>	
+		</div>
+		<div class="row">	
+			<div class="col-md-6">
+				
+			</div>
+			<div class="col-md-6">
+				
+			</div>	
+		</div>
+		<div class="row">	
+			<div class="col-md-6">
+				<% unless @candidate.document_pdf.blank?%>
+				
+				<% end %>	
+			</div>
+			<div class="col-md-6">
+				
+			</div>	
+		</div>	
+		</div>	
+		<div class="col-md-6" >	
+		<% @reports.each do|report|%>
+			<div class="row">
+				<div class="col-md-6">
+					<b> Status </b>
+				</div>
+				<div class="col-md-6">
+					<%= report.status %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<b> Time </b>
+				</div>
+				<div class="col-md-6">
+					<%= report.created_at %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<b> Feedback </b>
+				</div>
+				<div class="col-md-6">
+					<%= report.feedback %>
+				</div>
+			</div>
+			<br>
+		<% end %>	
+		</div>
+	</div>
+</div>
 	
-</table>
-
-<%= link_to "Report", report_path(@candidate.id) %><br>
-
+<style>
+	div{
+		text-align: left;
+	}
+	img{
+		border-radius: 100%;
+		margin-left: 50px;
+  	vertical-align: middle;
+	}
+</style>

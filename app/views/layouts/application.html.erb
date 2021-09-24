@@ -5,20 +5,26 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-
-    <p class="navbar-text float-right">
-    <% if user_signed_in? %>
-      Logged in as <strong><%= current_user.email %></strong>.
-      <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-    
-    <% end %>
-    </p>
-    
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <div class='row'>
+      <div class='col-md-6'>
+      </div>
+      <div class='col-md-6' id='layout'>
+        <p >
+          
+            
+            <% if user_signed_in? %>
+              Logged in as <strong><%= current_user.email %></strong>.
+              <%= link_to 'Edit profile', edit_user_registration_path, :class => "btn btn-outline-primary" %> |
+              <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => "btn btn-outline-primary"%>
+            <% end %>
+          </div>
+        </p>
+      </div>
+    </div>
   </head>
 
   <body>
@@ -28,7 +34,12 @@
     <% if alert %>
       <p class="alert alert-danger"><%= alert %></p>
     <% end %>
-   
     <%= yield %>
   </body>
 </html>
+
+<style>
+  #layout{
+    text-align: right
+  }
+  </style>

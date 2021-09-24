@@ -1,4 +1,6 @@
-<%= form_with model: @report do |form|%>
+
+
+<%= form_with  model: @report, url: candidate_reports_path do |form|%>
  <% if @report.errors.any?%>
   <h3> Errors </h3>
   <ul>
@@ -8,14 +10,12 @@
   </ul>  
   <% end %>
   <%= form.label :status%>
-  <%= form.text_field :status%><br><br>
-  <%= form.label :interview_number%>
-  <%= form.text_field :interview_number%><br><br>
-  <%= form.label :interviewer_name%>
+  <%= form.select :status, ["Pass", "Fail"]%><br><br>
+  <%= form.label :interview_number, "Interview Round"%>
+  <%= form.select :interview_number, ["First", "Second", "Final"]%><br><br>
+  <%= form.label :interviewer_name, "Interviewer Name"%>
   <%= form.text_field :interviewer_name%><br><br>
   <%= form.label :feedback%>
-  <%= form.text_field :feedback%><br><br>
-  
-  
+  <%= form.text_area :feedback%><br><br>  
   <%= form.submit%>
 <% end %>  
