@@ -3,9 +3,10 @@ class CandidatesController < ApplicationController
   before_action :set_candidate, only: [:show, :edit, :update, :destroy]
   
   def index
-    
-    if params[:search_key]
-      @candidates = Candidate.joins(:reports).where('interview_number Like ? or status Like ?', params[:search], params[:search]).where('name LIKE ? OR email Like ? ', "%#{params[:search_key]}%", "%#{params[:search_key]}%").where('user_id Like ?', "%#{current_user.id}%")
+  
+    if params[:search]
+      candidate = (Candidate.joins(:reports).where('interview_number LIKE ? or status LIKE ?', params[:search_field], params[:search_field]).where('name LIKE ? OR email LIKE ? ', "%#{params[:search]}%", "%#{params[:search]}%").where('user_id LIKE ?', "%#{current_user.id}%"))
+      @candidates = candidate
       if @candidates.blank?
         flash[:alert] = "Candidate not found"
         @candidates = current_user.candidates
@@ -14,8 +15,6 @@ class CandidatesController < ApplicationController
       @candidates = current_user.candidates
     end  
     @candidates =  @candidates.paginate(page: params[:page], per_page: 5).order('name ASC')
-
-   
   end
 
   def show

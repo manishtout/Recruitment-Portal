@@ -14,18 +14,19 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+
+// submit form on change dropdown
+
 $(document).ready(function(){
-  $("#search").change(function(){
-    
-    var mu = $("#search").val();
-    var manish = $('#search_key').val();
-    alert(mu + " "+    manish)
-    $("#manish").submit();
+  $("#search_field").change(function(){
+    var form = $("#search").val();
+    var drop_down = $('#search_field').val();
     $.ajax({
-      url: '/candidates/',
+      url: '/candidates',
       type: 'GET',
       dataType: 'script',
-      data: {"search": mu ,'drop': manish}
+      data: {"search": form ,'search_field' :drop_down }
   });
+  
 });
 });

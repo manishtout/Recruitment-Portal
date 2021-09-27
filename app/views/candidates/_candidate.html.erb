@@ -1,0 +1,37 @@
+<h3>Candidates</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>email</th>
+      <th>First Round</th>      
+      <th>Second Round</th>  
+      <th>Final Round</th>  
+    </tr>
+  </thead>
+
+  <tbody>     
+     <% @candidates.uniq.each do |candidate| %>
+    
+    <tr>
+      <td><%= candidate.name %></td>
+      <td><%= candidate.email %></td> 
+      <% flag = 3 %>
+      <%candidate.reports.each do |r|%>
+        <td><%= r.status%></td>
+        <% flag -= 1%>
+      <% end %>
+      <% for i in 0...flag%>
+        <td> not scheduled</td>
+      <% end %>
+      <td><%= link_to "Show", candidate_path(candidate.id), :class => "btn btn-outline-info" %></td>
+      <td><%= link_to "Edit", edit_candidate_path(candidate.id), :class => "btn btn-outline-primary" %></td>
+      <td><%= link_to "Destroy", candidate_path(candidate.id), method: :delete, data: { confirm: "Are you sure?" }, :class => "btn btn-outline-danger"  %></td>
+      <% if candidate.reports.where(status: "Fail").blank? %>
+        <td><%= link_to "Create New Report", new_candidate_report_path(candidate.id), :class => "btn btn-outline-success" %></td>
+      <% end %> 
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= will_paginate @candidates %> 
