@@ -1,6 +1,6 @@
 class Candidate < ApplicationRecord
   belongs_to :user
-  has_many :reports
+  has_many :reports, dependent: :destroy
   has_one_attached :document_pdf
   has_one_attached :avatar
   validates :avatar, presence: true
@@ -13,9 +13,11 @@ class Candidate < ApplicationRecord
   validate :image_validation?
 
   def image_validation?
-    if !document_pdf.content_type.in? (%("image/jpeg" "image/png" "image/jpg"))
-      errors.add(:avatar, "File must be jpeg, png or jpg")
-    end  
+    if avatar.attached?
+      if !avatar.content_type.in? (%("image/jpeg" "image/png" "image/jpg"))
+        errors.add(:avatar, "File must be jpeg, png or jpg")
+      end  
+    end
   end  
 end
 

@@ -11,8 +11,9 @@
   <% end %>
   <%= form.label :status%>
   <%= form.select :status, ["Pass", "Fail"]%><br><br>
-  <%= form.label :interview_number, "Interview Round"%>
-  <%= form.select :interview_number, ["First", "Second", "Final"]%><br><br>
+  <div>
+    <p>Interview Round : <%= @report.candidate_interview_round(@report.candidate_id)%> <p>
+  </div>
   <%= form.label :interviewer_name, "Interviewer Name"%>
   <%= form.text_field :interviewer_name%><br><br>
   <%= form.label :feedback%>

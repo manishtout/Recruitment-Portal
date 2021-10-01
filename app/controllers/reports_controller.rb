@@ -1,6 +1,7 @@
 class ReportsController < ApplicationController
   before_action :get_candidate
   before_action :check_report, only: [:new]
+  before_action :authenticate_user!, only: [:new, :create]
   
 
   # def index
@@ -19,6 +20,13 @@ class ReportsController < ApplicationController
 
   def create
     @report = @candidate.reports.new(report_params)
+    if @report[-1].interview_number == nil
+      @report.interview_number = "First"
+    elsif @report[-1].interview_number == "First"
+      @report.interview_number = "Second"
+    elsif @report[-1].interview_number == "Second"
+      @report.interview_number = "Final"
+    end  
 
     if @report.save
       redirect_to root_path, notice: "#{@candidate.name} have created a report"

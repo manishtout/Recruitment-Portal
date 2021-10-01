@@ -2,26 +2,24 @@ class CandidatesController < ApplicationController
 
   before_action :set_candidate, only: [:show, :edit, :update, :destroy]
   
-  def index
   
-    if params[:search]
-      candidate = (Candidate.joins(:reports).where('interview_number LIKE ? or status LIKE ?', params[:search_field], params[:search_field]).where('name LIKE ? OR email LIKE ? ', "%#{params[:search]}%", "%#{params[:search]}%").where('user_id LIKE ?', "%#{current_user.id}%"))
-      @candidates = candidate
-      if @candidates.blank?
-        flash[:alert] = "Candidate not found"
-        @candidates = current_user.candidates
-      end
-    else
-      @candidates = current_user.candidates
-    end  
+  def index
+    @candidates = current_user.candidates
+
+    if params[:search].present?
+      @candidates = @candidates.where('name like ? OR email like ?', "%#{params[:search]}%", "%#{params[:search]}%")
+    end
+
+    if params[:search_field]
+      @candidates = @candidates.joins(:reports).where('reports.interview_number LIKE ? OR reports.status LIKE ?', "%#{params[:search_field]}%", "%#{params[:search_field]}%")
+    end
+
     @candidates =  @candidates.paginate(page: params[:page], per_page: 5).order('name ASC')
   end
 
   def show
-    
     @reports = @candidate.reports
   end
-  
 
   def new
     @candidate = current_user.candidates.build
@@ -45,9 +43,7 @@ class CandidatesController < ApplicationController
   end
 
   def destroy
-    if @candidate.destroy
-      redirect_to root_path, notice: "#{@candidate.name} candidate has no longer"
-    end
+    @candidate.destroy
   end
 
   private  
@@ -56,8 +52,6 @@ class CandidatesController < ApplicationController
     @candidate = current_user.candidates.find(params[:id])
   end
 
-  
-  
   def candidate_params
     params.require(:candidate).permit(:name, :email, :passout_year, :phone_number, :document_pdf, :avatar)
   end

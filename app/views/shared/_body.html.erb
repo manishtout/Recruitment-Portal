@@ -1,25 +1,39 @@
-<%=form_with model: @candidate do |candidate|%>
+<%=form_with model: @candidate, id: :newForm, onsubmit: "$.validateCandidateForm();" do |candidate|%>
+
   <% if @candidate.errors.any?%>
-  <h3> Errors </h3>
-  <ul>
-    <% @candidate.errors.full_messages.each do |message|%>
-      <li><%= message%></li>
-    <% end %>
-  </ul>  
+    <ul>
+      <% @candidate.errors.full_messages.each do |message|%>
+        <li><%= message%></li>
+      <% end %>
+    </ul>  
   <% end %>
-      <%= candidate.label :name%>
-      <%= candidate.text_field :name%><br><br>
-      <%= candidate.label :email%>
-      <%= candidate.text_field :email%><br><br>
-      <%= candidate.label :passout_year%>
-      <%= candidate.text_field :passout_year%><br><br>
-      <%= candidate.label :phone_number%>
-      <%= candidate.text_field :phone_number%><br><br>
-      <%= candidate.label :avatar%>
-      <%= candidate.file_field :avatar%>
-      <%= candidate.label :document_pdf%>
-      <%= candidate.file_field :document_pdf%>
-      <% if :document_pdf%>
-       <%= candidate.submit "Submit"%>
-      <% end %> 
+
+  <%= candidate.label :name%>
+  <%= candidate.text_field :name, placeholder: "Ex. John"%>
+  <span id="name"><small style="color:red;"></small></span><br><br>
+
+  <%= candidate.label :email%>
+  <%= candidate.text_field :email, placeholder: "Ex. abc@gamil.com"%>
+  <span id="email"><small style="color:red;"></small></span><br><br>
+  
+  <%= candidate.label :passout_year%>
+  <%= candidate.text_field :passout_year, placeholder: "Ex. 2020"%>
+  <span id="passoutyear"><small style="color:red;"></small></span><br><br>
+
+  <%= candidate.label :phone_number%>
+  <%= candidate.text_field :phone_number, placeholder: "Ex. 96325xxxxx"%>
+  <span id="phoneno."><small style="color:red;"></small></span><br><br>
+
+  <%= candidate.label :avatar%>
+  <%= candidate.file_field :avatar, accept: "image/*"%>
+  <span id="avatar"><small style="color:red;"></small></span><br><br>
+
+  <%= candidate.label :Resume%>
+  <%= candidate.file_field :Resume, id: "Resume", accept: "application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document"%>
+  <span id="resume"><small style="color:red;"></small></span><br><br>
+
+  <% if :document_pdf%>
+    <%= candidate.submit "Submit", class: "btn btn-primary"%>
+  <% end %> 
+      
 <% end %>  

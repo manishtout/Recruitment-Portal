@@ -2,11 +2,13 @@
 	<div class="col-md-6">
 		<div class="row">
 			<div class="col-md-6">
-				
-				<%= image_tag @candidate.avatar.variant(resize_to_limit: [250,280])%>
+				<% unless @candidate.avatar.blank?%>
+					<%= image_tag @candidate.avatar.variant(resize_to_limit: [250,280])%>
+				<% else %>
+					img
+				<% end %>	
 			</div>
 		
-
 			<div class="col-md-6">
 				<h3><%= @candidate.name %></h3>
 				<%= @candidate.email %><br>
@@ -53,33 +55,37 @@
 		</div>	
 		</div>	
 		<div class="col-md-6" >	
-		<% @reports.each do|report|%>
-			<div class="row">
-				<div class="col-md-6">
-					<b> Status </b>
+		<% unless @reports.blank?%>
+			<% @reports.each do|report|%>
+				<div class="row">
+					<div class="col-md-6">
+						<b> Status </b>
+					</div>
+					<div class="col-md-6">
+						<%= report.status %>
+					</div>
 				</div>
-				<div class="col-md-6">
-					<%= report.status %>
+				<div class="row">
+					<div class="col-md-6">
+						<b> Time </b>
+					</div>
+					<div class="col-md-6">
+						<%= report.created_at %>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<b> Time </b>
+				<div class="row">
+					<div class="col-md-6">
+						<b> Feedback </b>
+					</div>
+					<div class="col-md-6">
+						<%= report.feedback %>
+					</div>
 				</div>
-				<div class="col-md-6">
-					<%= report.created_at %>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<b> Feedback </b>
-				</div>
-				<div class="col-md-6">
-					<%= report.feedback %>
-				</div>
-			</div>
-			<br>
-		<% end %>	
+				<br>
+			<% end %>	
+		<% else %>
+			<% flash[:alert] = " You have no reports" %>
+		<% end %>		
 		</div>
 	</div>
 </div>
