@@ -37,6 +37,6 @@ $(document).ready(function(){
       data: {"search": form ,'search_field' :drop_down }
     });
   });
-  var r = $("#newForm").val()
-
+  
+  
 });

@@ -1,40 +1,172 @@
 <% if @candidates.present?%>
-  <h3>Candidates</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>email</th>
-        <th>First Round</th>      
-        <th>Second Round</th>  
-        <th>Final Round</th>  
-      </tr>
-    </thead>
-    <tbody>     
-    <% @candidates.uniq.each do |candidate| %>
-      <tr id="row_<%= candidate.id%>">
-        <td><%= candidate.name %></td>
-        <td><%= candidate.email %></td> 
-        <% flag = 3 %>
-        <%candidate.reports.each do |r|%>
-          <td><%= r.status%></td>
-          <% flag -= 1%>
-        <% end %>
-        <% for i in 0...flag%>
-          <td> not scheduled</td>
-        <% end %>
-        <td><%= link_to "Show", candidate_path(candidate.id), :class => "btn btn-outline-info" %></td>
-        <td><%= link_to "Edit", edit_candidate_path(candidate.id), :class => "btn btn-outline-primary" %></td>
-        <td><%= link_to "Destroy", candidate_path(candidate.id), method: :delete, data: { confirm: "Are you sure?" }, :class => "btn btn-outline-danger",id: "delete", remote: true  %></td>
+  <h2>Candidates</h2>
+  
+    <head>
+      <h4>
+        <div class="row">
+          <div class="col-md-1">Name</div>
+          <div class="col-md-2">email</div>
+          <div class="col-md-1">First Round</div>      
+          <div class="col-md-1">Second Round</div>  
+          <div class="col-md-1">Final Round</div>  
+        </div>
+      </h4>
+    </head>
 
-        <% if candidate.reports.where(status: "Fail").blank? %>
-          <td><%= link_to "Create New Report", new_candidate_report_path(candidate.id), :class => "btn btn-outline-success" %></td>
-        <% end %> 
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+    <script>
+      $( function() {
+        $( "#accordion" ).accordion();
+      } );
+    </script>
+    <style>
+
+  $Mahogany : ;
+$AppleBlossom : #a53f3f;
+$GoldenSand : #f4ce74;
+$EggWhite : #ffe9c1;
+$OrangeRoughy : #d5441c;
+$mainfont : "JF Flat Regular";
+
+
+
+      body{
+  background: #f6704b;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+}
+#accordion{
+    
+    
+    cursor: pointer;
+    
+        .item{
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+            padding-left: 50px;
+            font-family: $mainfont;
+            font-size: 20px;
+            font-weight: 400;
+            background: #620808;
+            color: #f4ce74;
+        }
+       
+        h6:before{
+            content: "";
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+        } 
+    
+    .item:first-of-type{
+    }
+    .item:nth-of-type(2){
+        background: $AppleBlossom;
+        color: $EggWhite;
+    }
+    .item:nth-of-type(3){
+        background: $GoldenSand;
+        color: $Mahogany;
+    }
+    .item:nth-of-type(4){
+        background: $EggWhite;
+        color: $OrangeRoughy;
+    }
+    .item:last-of-type{
+        background: $OrangeRoughy;
+        color: $EggWhite;
+    }
+    p{
+        font-family: $mainfont;
+        font-size: 18px;
+        font-weight: 400;
+        padding: 15px;
+        display: none;
+        box-shadow: inset 0 3px 7px rgba(#000, 0.2);
+    }
+    p:first-of-type{
+        background: $Mahogany;
+        color: $GoldenSand;
+    }
+    p:nth-of-type(2){
+        background: $AppleBlossom;
+        color: $EggWhite;
+    }
+    p:nth-of-type(3){
+        background: $GoldenSand;
+        color: $Mahogany;
+        
+    }
+    p:nth-of-type(4){
+        background: $EggWhite;
+        color: $OrangeRoughy;
+    }
+    p:last-of-type{
+        background: $OrangeRoughy;
+        color: $EggWhite;
+    }
+}
+    </style>
+
+    <body>     
+      <div id="accordion">
+      
+      <% @candidates.uniq.each do |candidate| %>
+          <h6>
+            <div class="row" id="item">
+              <div class="col-md-1"><%= candidate.name %></div>
+              <div class="col-md-2"><%= candidate.email %></div> 
+              <% flag = 3 %>
+              <%candidate.reports.each do |r|%>
+                <div class="col-md-1"><%= r.status%></div>
+                <% flag -= 1%>
+              <% end %>
+              <% for i in 0...flag%>
+                <div class="col-md-1"> not scheduled</div>
+              <% end %>
+              <div class="col-md-1"><%= link_to "Show", candidate_path(candidate.id), :class => "btn btn-outline-info" %></div>
+              <div class="col-md-1"><%= link_to "Edit", edit_candidate_path(candidate.id), :class => "btn btn-outline-primary" %></div>
+              <div class="col-md-1"><%= link_to "Destroy", candidate_path(candidate.id), method: :delete, data: { confirm: "Are you sure?" }, :class => "btn btn-outline-danger",id: "delete", remote: true  %></div>
+
+              <% if candidate.reports.where(status: "Fail").blank? %>
+                <% if candidate.reports.where(interview_number: "Final").blank?%>
+                  <div class="col-md-2"><%= link_to "Create New Report", new_candidate_report_path(candidate.id), :class => "btn btn-outline-success" %></div>
+                <% end %> 
+              <% end %>
+            </div>
+          </h6>
+          
+          <div>
+          
+            
+              <% unless candidate.reports.blank?%>
+                <% candidate.reports.each do|report|%>
+                  <div class="row" >
+                  
+                    <div class="col-md-3" >
+                      <%= report.status %>
+                    </div>
+                    <div class="col-md-3">
+                      <%= report.created_at %>
+                    </div>
+                    <div class="col-md-3">
+                      <%= report.feedback %>
+                    </div>
+                  </div>
+                  <div class="row">
+                  </div>
+                <% end %>
+              <% end %> 
+            
+          </div>
+      <% end %>
+      </div>  
+    </body>
+  
   <%= will_paginate @candidates %> 
 <% else %>
   <h3>Candidate not Found </h3>  
-<% end %>  
+<% end %>

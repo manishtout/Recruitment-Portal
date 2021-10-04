@@ -1,4 +1,3 @@
-alert("hiii")
 $(function(){
   $(document).on("submit", "#newForm", function(){
     alert("olmksdlkfmed")

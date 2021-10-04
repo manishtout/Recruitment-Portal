@@ -13,13 +13,11 @@ class CandidatesController < ApplicationController
     if params[:search_field]
       @candidates = @candidates.joins(:reports).where('reports.interview_number LIKE ? OR reports.status LIKE ?', "%#{params[:search_field]}%", "%#{params[:search_field]}%")
     end
-
+    
     @candidates =  @candidates.paginate(page: params[:page], per_page: 5).order('name ASC')
   end
 
-  def show
-    @reports = @candidate.reports
-  end
+
 
   def new
     @candidate = current_user.candidates.build
@@ -48,8 +46,13 @@ class CandidatesController < ApplicationController
 
   private  
 
+  
   def set_candidate
     @candidate = current_user.candidates.find(params[:id])
+    @reports = @candidate.reports
+  end
+
+  def set_reports
   end
 
   def candidate_params
