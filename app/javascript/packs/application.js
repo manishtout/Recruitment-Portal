@@ -8,6 +8,7 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import "../stylesheets/application";
 require("jquery")
 require("packs/candidate")
 
@@ -38,5 +39,17 @@ $(document).ready(function(){
     });
   });
   
+  $("#Resume").change(function(){
+    var extName;
+    var allowedExtension = ["pdf", "docx"]
+    var resume = $("#Resume").val()
+    if (resume == ""){
+      extName = resume.split('.').pop();
+      if ($.inArray(extName, allowedExtension) == -1) {
+        $("#resume").innerhtml("Profile Picture must be valid");
+        return false;}
+      }
+  
+  })
   
 });

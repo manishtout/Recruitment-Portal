@@ -9,7 +9,7 @@
 <div class="row">
   <div class="col-md-6">
     <%= form_with url: candidates_path, html: {id: "drop_form"}, method: :get do|form|%>
-      <%= text_field_tag :search, params[:search] %>
+      <%= text_field_tag :search, params[:search],  :class => "btn btn-outline-primary" %>
       <%= form.select :search_field, ["All",["Pass", "Pass"], ["Fail", "Fail"],["First Round", "First"],["Second Round", "Second"],["Final Round", "Final"]], selected: params[:search_field] %>
     <% end %>
   </div>

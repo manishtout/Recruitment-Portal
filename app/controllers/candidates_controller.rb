@@ -44,6 +44,9 @@ class CandidatesController < ApplicationController
     @candidate.destroy
   end
 
+  def bulk_destroy
+    Candidate.where(id: params[:collection_ids]).destroy_all
+  end
   private  
 
   
@@ -56,7 +59,7 @@ class CandidatesController < ApplicationController
   end
 
   def candidate_params
-    params.require(:candidate).permit(:name, :email, :passout_year, :phone_number, :document_pdf, :avatar)
+    params.require(:candidate).permit(:name, :email, :passout_year, :phone_number, :document_pdf, :avatar, :candidate_ids)
   end
   
 end
