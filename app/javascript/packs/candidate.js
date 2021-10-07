@@ -1,13 +1,11 @@
 $(function(){
   $(document).on("submit", "#newForm", function(){
-    alert("olmksdlkfmed")
     var name = $("#candidate_name").val();
     var email = $("#candidate_email").val();
     var passout_year = $("#candidate_passout_year").val();
     var phone_number = $("#candidate_phone_number").val();
     var avatar = $("#candidate_avatar").val();
     var resume = $("#candidate_Resume").val();
-    alert(typeof avatar)
 
     var nameVal = /^[A-Za-zÀ-ÿ ,.'-]+$/
     var emailVal = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/

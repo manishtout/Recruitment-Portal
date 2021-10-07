@@ -1,1 +1,11 @@
-$("#row_<%= escape_javascript params[:id] %>").remove();
+<% if params[:id].present? %>
+    $("#row_<%= escape_javascript check %>").remove();
+<% end %>
+
+<% if params[:checkbox].present? %>
+  <% params[:checkbox].each do|check|%>
+    $("#row_<%= escape_javascript check %>").remove();
+  <% end %>
+<% end %>  
+
+

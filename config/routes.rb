@@ -3,10 +3,10 @@ Rails.application.routes.draw do
   devise_for :users
   
   resources :candidates, shallow: true do
-    delete :bulk_destroy
     resources :reports
   end
   
+  get 'bulk_destroy', to: 'candidates#bulk_destroy'
   root to: "candidates#index"
 
 end

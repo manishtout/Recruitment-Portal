@@ -9,18 +9,38 @@
           <div class="col-md-1">First Round</div>      
           <div class="col-md-1">Second Round</div>  
           <div class="col-md-1">Final Round</div>  
+          <div class="col-md-4"><button type="button" id="destroy_candidate" >Destroy</button></div>
         </div>
       </h4>
+      <script>
+        // $(function(){
+        //   $("#accordion").accordion();
+        // })
+        
+        $("#destroy_candidate").click(function(){
+          alert("hii")
+          var data = $('input:checkbox:checked');
+          text=[]
+          for(let i=0;i<data.length;i++){
+            text.push( data[i].value)}
+          $.ajax({
+            url: '/bulk_destroy',
+            type: 'GET',
+            dataType: 'script',
+            data: {"checkbox" :text }
+            });
+            alert("bye")
+
+        })
+      </script>
     </head>      
 
     <body>     
-    
       <div id="accordion">  
-      <% form_with model: @candidates, url: "/candidates/bulk_destroy", method: :delete do |f| %>    
         <% @candidates.uniq.each do |candidate| %>      
-          <div class="row" id="item">        
-
-          <input type="checkbox"  name="candidates[]" value="<%= candidate.id%>">   
+        
+          <div class="row" id="item">                  
+            <div class="col-md-1"><input type="checkbox" name=<%= candidate.name%> value=<%=candidate.id%> id="check" ></div>
             <div class="col-md-1"><%= candidate.name %></div>
             <div class="col-md-2"><%= candidate.email %></div> 
             <% flag = 3 %>
@@ -40,32 +60,26 @@
               <% end %> 
             <% end %>
           </div>
-          
-          
           <div id="p">
-              <% unless candidate.reports.blank?%>
-                <% candidate.reports.each do|report|%>
-                  <div class="row" >
-                  
-                    <div class="col-md-3" >
-                      <%= report.status %>
-                    </div>
-                    <div class="col-md-3">
-                      <%= report.created_at %>
-                    </div>
-                    <div class="col-md-3">
-                      <%= report.feedback %>
-                    </div>
+            <% unless candidate.reports.blank?%>
+              <% candidate.reports.each do|report|%>
+                <div class="row" >
+                  <div class="col-md-3" >
+                    <%= report.status %>
                   </div>
-                <% end %>
-              <% end %> 
+                  <div class="col-md-3">
+                    <%= report.created_at %>
+                  </div>
+                  <div class="col-md-3">
+                    <%= report.feedback %>
+                  </div>
+                </div>
+              <% end %>
+            <% end %> 
           </div>
-        <% end %>
-        <%= f.submit %>
-<% end %>
+        <% end %> 
       </div>  
     </body>
-  
   <%= will_paginate @candidates %> 
 <% else %>
   <h3>Candidate not Found </h3>  
