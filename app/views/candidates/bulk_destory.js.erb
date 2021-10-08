@@ -1,0 +1,3 @@
+<% params[:checkbox].each do|check|%>
+    $("#row_<%= escape_javascript check %>").remove();
+<% end %>

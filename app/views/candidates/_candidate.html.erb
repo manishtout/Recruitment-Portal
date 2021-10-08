@@ -9,13 +9,22 @@
           <div class="col-md-1">First Round</div>      
           <div class="col-md-1">Second Round</div>  
           <div class="col-md-1">Final Round</div>  
-          <div class="col-md-4"><button type="button" id="destroy_candidate" >Destroy</button></div>
+          <div class="col-md-2"><button type="button" id="destroy_candidate" class = "btn btn-outline-danger">Destroy</button></div>
+          <div class="col-md-2"><%= link_to "Create New Employer", new_employer_path, id: "create_empolyer", class: "btn btn-outline-success"%></div>
         </div>
       </h4>
       <script>
-        // $(function(){
-        //   $("#accordion").accordion();
-        // })
+        $(function(){
+          // var event = $("#accordion").accordion("accordion", "check")
+          $("#accordion").accordion();
+          $("#accordion").find('input[type="checkbox"]').on("click", function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            setTimeout(function() {
+      this.checked = !this.checked;
+    }.bind(this), 100);
+            });
+        })
         
         $("#destroy_candidate").click(function(){
           alert("hii")
@@ -38,27 +47,28 @@
     <body>     
       <div id="accordion">  
         <% @candidates.uniq.each do |candidate| %>      
-        
-          <div class="row" id="item">                  
-            <div class="col-md-1"><input type="checkbox" name=<%= candidate.name%> value=<%=candidate.id%> id="check" ></div>
-            <div class="col-md-1"><%= candidate.name %></div>
-            <div class="col-md-2"><%= candidate.email %></div> 
-            <% flag = 3 %>
-            <%candidate.reports.each do |r|%>
-              <div class="col-md-1"><%= r.status%></div>
-              <% flag -= 1%>
-            <% end %>
-            <% for i in 0...flag%>
-              <div class="col-md-1"> not scheduled</div>
-            <% end %>
-            <div class="col-md-1"><%= link_to "Show", candidate_path(candidate.id), :class => "btn btn-outline-info", target: :_blank %></div>
-            <div class="col-md-1"><%= link_to "Edit", edit_candidate_path(candidate.id), :class => "btn btn-outline-primary", target: :_blank %></div>
-            <div class="col-md-1"><%= link_to "Destroy", candidate_path(candidate.id), method: :delete, data: { confirm: "Are you sure?" }, :class => "btn btn-outline-danger",id: "delete", remote: true  %></div>
-            <% if candidate.reports.where(status: "Fail").blank? %>
-              <% if candidate.reports.where(interview_number: "Final").blank?%>
-                <div class="col-md-2"><%= link_to "Create New Report", new_candidate_report_path(candidate.id), :class => "btn btn-outline-success", target: :_blank %></div>
-              <% end %> 
-            <% end %>
+          <div class="row" id="row_<%= candidate.id%>">                  
+            <div class="row" id ="item">
+              <div class="col-md-1"><input type="checkbox" name=<%= candidate.name%> value=<%=candidate.id%> id="check" ></div>
+              <div class="col-md-1"><%= candidate.name %></div>
+              <div class="col-md-2"><%= candidate.email %></div> 
+              <% flag = 3 %>
+              <%candidate.reports.each do |r|%>
+                <div class="col-md-1"><%= r.status%></div>
+                <% flag -= 1%>
+              <% end %>
+              <% for i in 0...flag%>
+                <div class="col-md-1"> not scheduled</div>
+              <% end %>
+              <div class="col-md-1"><%= link_to "Show", candidate_path(candidate.id), :class => "btn btn-outline-info", target: :_blank %></div>
+              <div class="col-md-1"><%= link_to "Edit", edit_candidate_path(candidate.id), :class => "btn btn-outline-primary", target: :_blank %></div>
+             
+              <% if candidate.reports.where(status: "Fail").blank? %>
+                <% if candidate.reports.where(interview_number: "Final").blank?%>
+                  <div class="col-md-2"><%= link_to "Create New Report", new_candidate_report_path(candidate.id), :class => "btn btn-outline-success", target: :_blank %></div>
+                <% end %> 
+              <% end %>
+            </div>
           </div>
           <div id="p">
             <% unless candidate.reports.blank?%>
@@ -77,6 +87,7 @@
               <% end %>
             <% end %> 
           </div>
+          
         <% end %> 
       </div>  
     </body>

@@ -1,7 +1,8 @@
 class CandidatesController < ApplicationController
 
   before_action :set_candidate, only: [:show, :edit, :update, :destroy]
-  
+  before_action :authenticate_user!,only: [:bulk_destroy, :new, :create, :index, :update]
+  before_action :set_candidate_checkbox, only: [:bulk_destroy]
   
   def index
     @candidates = current_user.candidates
@@ -45,20 +46,21 @@ class CandidatesController < ApplicationController
   end
 
   def bulk_destroy
-    Candidate.where(id: params[:checkbox]).destroy_all
+    @candidate_checkbox.destroy_all
     respond_to do |format|
       format.js {render "destroy"}
     end
   end
+
   private  
 
-  
   def set_candidate
     @candidate = current_user.candidates.find(params[:id])
-    @reports = @candidate.reports
+    @reports = @candidate.reports                                          # also set reports of candidate
   end
 
-  def set_reports
+  def set_candidate_checkbox
+    @candidate_checkbox = current_user.candidates.where(id: params[:checkbox])
   end
 
   def candidate_params

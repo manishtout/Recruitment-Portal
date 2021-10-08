@@ -1,0 +1,10 @@
+<%= form_with model: @employer do|employer|%>
+  Name:
+  <%= employer.text_field :name%><br>
+  Email:
+  <%= employer.text_field :email%><br>
+  Phone Number:
+  <%= employer.text_field :phone_number%><br>
+  <%= employer.submit "Submit"%>
+<% end %>  
+

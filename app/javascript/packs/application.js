@@ -39,6 +39,12 @@ $(document).ready(function(){
     });
   });
   
+
+  $(function(){
+          $("#accordion").accordion();
+        })
+
+
   $("#Resume").change(function(){
     var extName;
     var allowedExtension = ["pdf", "docx"]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_20_081957) do
+ActiveRecord::Schema.define(version: 2021_10_08_125731) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -50,6 +50,25 @@ ActiveRecord::Schema.define(version: 2021_09_20_081957) do
     t.integer "user_id"
   end
 
+  create_table "employers", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.integer "phone_number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.integer "employer_id"
+    t.integer "user_id"
+    t.integer "role_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employer_id"], name: "index_memberships_on_employer_id"
+    t.index ["role_id"], name: "index_memberships_on_role_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
   create_table "reports", force: :cascade do |t|
     t.string "status"
     t.string "interview_number"
@@ -58,6 +77,12 @@ ActiveRecord::Schema.define(version: 2021_09_20_081957) do
     t.integer "candidate_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "character"
   end
 
   create_table "users", force: :cascade do |t|
@@ -75,5 +100,8 @@ ActiveRecord::Schema.define(version: 2021_09_20_081957) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "candidates", "users"
+  add_foreign_key "memberships", "employers"
+  add_foreign_key "memberships", "roles"
+  add_foreign_key "memberships", "users"
   add_foreign_key "reports", "candidates"
 end

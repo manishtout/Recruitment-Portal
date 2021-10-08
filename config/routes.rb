@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     resources :reports
   end
   
+  resources :employers
+
   get 'bulk_destroy', to: 'candidates#bulk_destroy'
   root to: "candidates#index"
 

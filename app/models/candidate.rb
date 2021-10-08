@@ -11,6 +11,7 @@ class Candidate < ApplicationRecord
   validates :phone_number, presence: true, format: { with: /\d{10}/, message: "only allow digits and must 10 digits"}
   validates :user_id, presence: true
   validate :image_validation?
+  
   def image_validation?
     if avatar.attached?
       if !avatar.content_type.in? (%("image/jpeg" "image/png" "image/jpg"))

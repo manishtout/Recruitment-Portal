@@ -16,20 +16,20 @@ class Report < ApplicationRecord
 
   def candidate_interview_round(c_id)     #c_id candidate id 
     reports = Candidate.find(c_id).reports
-    @r = ""
+    @round = ""
     if reports.empty?
-      @r = "First"
+      @round = "First"
     else
       reports.each do |report|        
         if report.interview_number == "First"
-          @r = "Second"
+          @round = "Second"
           next;
         elsif report.interview_number == "Second"
-          @r = "Final"
+          @round = "Final"
         end  
       end
     end
-    return @r  
+    return @round  
   end
 
 end

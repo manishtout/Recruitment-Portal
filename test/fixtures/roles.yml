@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  admin: MyString
+  editor: MyString
+  viewer: MyString
+  writer: MyString
+  distributor: MyString
+
+two:
+  admin: MyString
+  editor: MyString
+  viewer: MyString
+  writer: MyString
+  distributor: MyString

@@ -18,15 +18,16 @@ class ReportsController < ApplicationController
       return redirect_to root_path, notice: "#{@candidate.name} must be passed in previous round."
     end
   end
-
+  
   def create
-   
+
     @report = @candidate.reports.new(report_params)
-    @r = Candidate.find(params[:candidate_id]).reports
-    if @r.blank?
+    
+    @candidate_reports = Candidate.find(params[:candidate_id]).reports
+    if @candidate_reports.blank?
       @report.interview_number = "First"
     else
-      @r.each do |report|        
+      @candidate_reports.each do |report|        
         if report.interview_number == "First"
           @report.interview_number = "Second"
           next;
