@@ -56,7 +56,7 @@ class CandidatesController < ApplicationController
 
   def set_candidate
     @candidate = current_user.candidates.find(params[:id])
-    @reports = @candidate.reports                                          # also set reports of candidate
+    @reports = @candidate.reports                                          #   also set reports of candidate
   end
 
   def set_candidate_checkbox

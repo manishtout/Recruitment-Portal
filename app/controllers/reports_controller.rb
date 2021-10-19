@@ -4,12 +4,9 @@ class ReportsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
   # before_action :get_reports
   
-
   def index
     @reports = @candidate.reports
   end
-
-  
 
   def new
     if @check
@@ -20,9 +17,7 @@ class ReportsController < ApplicationController
   end
   
   def create
-
     @report = @candidate.reports.new(report_params)
-    
     @candidate_reports = Candidate.find(params[:candidate_id]).reports
     if @candidate_reports.blank?
       @report.interview_number = "First"
@@ -36,7 +31,6 @@ class ReportsController < ApplicationController
         end  
       end
     end
-    
     if @report.save
       redirect_to root_path, notice: "#{@candidate.name} have created a report"
     else
@@ -45,8 +39,6 @@ class ReportsController < ApplicationController
   end
   
   private
-
-  
 
   def check_report  
     @check = @candidate.reports.check_status.blank?
@@ -59,4 +51,5 @@ class ReportsController < ApplicationController
   def report_params
     params.require(:report).permit(:status, :feedback, :interviewer_name)
   end
+
 end

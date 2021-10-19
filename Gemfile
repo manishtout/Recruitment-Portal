@@ -68,3 +68,5 @@ gem 'activestorage-validator', '~> 0.1.4'
 
 gem 'htmlbeautifier'
 
+gem 'cancancan'
+

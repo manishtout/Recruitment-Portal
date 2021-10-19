@@ -1,0 +1,25 @@
+
+
+<% if @membership.errors.any?%>
+    <h6 style="color:red;"><%= @membership.errors.attribute_names*""%>  </h6>
+  
+<% end %>    
+
+<% @user_name = []
+  @role_character = []%>
+<% @users.each do |user|%>
+  <% @user_name.push([user.email, user.id])%>
+<% end %>
+<% @roles.each do |role|%>
+  <% @role_character.push([role.character, role.id])%>
+<% end %>
+
+<%= form_with model: @membership,url: employer_memberships_path do |form|%>
+  <%# <% @employer_name = @membership.find_employer(current_user.id)%> 
+    <%= form.label :user_id, "User Id :"%>
+    <%= form.select :user_id, @user_name%><br><br>
+    <%= form.label :role_id, "Role :"%>
+    <%= form.select :role_id, @role_character%><br><br>  
+    <%= form.submit "Submit", :class => "btn btn-outline-success"%>
+  
+<% end %>  

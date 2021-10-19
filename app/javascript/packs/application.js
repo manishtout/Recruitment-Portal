@@ -40,10 +40,19 @@ $(document).ready(function(){
   });
   
 
-  $(function(){
-          $("#accordion").accordion();
-        })
+  // $("#user").keyup(function(){
+  //   var user_name = $("user").val()
+  //   $.ajax({
+  //     url:
+  //   })
+  // })
 
+  $(function(){
+    $("#accordion").accordion();
+    $("#employer").accordion();
+  })
+
+  $("#user_id").select2();
 
   $("#Resume").change(function(){
     var extName;

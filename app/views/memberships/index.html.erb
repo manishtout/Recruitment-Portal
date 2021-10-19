@@ -1,0 +1,14 @@
+<% @memberships.each do |membership|%>
+  <% @record = @memberships.find_employer_user_role(membership.employer_id, membership.user_id, membership.role_id)%>
+  <div class="row">
+    <div class="col-md-3">
+      <%=@record[0]%>
+    </div>
+    <div class="col-md-3">
+      <%=@record[1]%>
+    </div>
+    <div class="col-md-3">
+      <%=@record[2]%>
+    </div>
+  </div>
+<% end %>    

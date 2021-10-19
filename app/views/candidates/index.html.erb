@@ -7,12 +7,14 @@
 </style>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <%= form_with url: candidates_path, html: {id: "drop_form"}, method: :get do|form|%>
       <%= text_field_tag :search, params[:search],  :class => "btn btn-outline-primary" %>
       <%= form.select :search_field, ["All",["Pass", "Pass"], ["Fail", "Fail"],["First Round", "First"],["Second Round", "Second"],["Final Round", "Final"]], selected: params[:search_field] %>
     <% end %>
   </div>
+  <div class="col-md-2"><%= link_to "Create New Employer", new_employer_path, id: "create_empolyer", class: "btn btn-outline-success"%></div>
+  <div class="col-md-2"><%= link_to "View Employers", employers_path, id: "view_employers", class: "btn btn-outline-success"%></div>
 </div> 
 <div id="candidates">
   <%= render "candidate"%>

@@ -4,4 +4,8 @@ class User < ApplicationRecord
   
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable       
+  
+  def ability
+    @ability ||= Ability.new(self)
+  end
 end
