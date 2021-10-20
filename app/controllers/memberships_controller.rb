@@ -14,7 +14,7 @@ class MembershipsController < ApplicationController
   def create
     @membership = @employer.memberships.new(member_params)
     if @membership.save
-      redirect_to employer_memberships_path
+      redirect_to employer_path(@membership.employer_id)
     else 
       @roles = Role.all
       @users = User.all

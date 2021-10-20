@@ -1,8 +1,19 @@
 
 
 <% if @membership.errors.any?%>
-    <h6 style="color:red;"><%= @membership.errors.attribute_names*""%>  </h6>
-  
+    <h6 style="color:red;">
+      <% @membership.errors.each do|msg|%>
+        <%begin %>
+          <% msg.message%>
+          <%= msg.message%>
+        <% rescue %>
+          <%msg.attribute%>
+          <%=msg.attribute%>
+        <% end %>  
+      <% end %> 
+    
+    </h6>
+<br>
 <% end %>    
 
 <% @user_name = []
@@ -18,8 +29,10 @@
   <%# <% @employer_name = @membership.find_employer(current_user.id)%> 
     <%= form.label :user_id, "User Id :"%>
     <%= form.select :user_id, @user_name%><br><br>
-    <%= form.label :role_id, "Role :"%>
-    <%= form.select :role_id, @role_character%><br><br>  
+    <div>
+      <%= form.label :role_id, "Role :"%>
+      <%= form.select :role_id, @role_character%><br><br>  
+    </div>
     <%= form.submit "Submit", :class => "btn btn-outline-success"%>
   
 <% end %>  
