@@ -1,15 +1,9 @@
-
+<h2><%= Employer.where(id: @membership.employer_id).pluck(:name)*""%></h2>
 
 <% if @membership.errors.any?%>
     <h6 style="color:red;">
       <% @membership.errors.each do|msg|%>
-        <%begin %>
-          <% msg.message%>
-          <%= msg.message%>
-        <% rescue %>
-          <%msg.attribute%>
-          <%=msg.attribute%>
-        <% end %>  
+          <%=msg.message%>  
       <% end %> 
     
     </h6>
@@ -25,9 +19,9 @@
   <% @role_character.push([role.character, role.id])%>
 <% end %>
 
-<%= form_with model: @membership,url: employer_memberships_path do |form|%>
+<%= form_with model: @membership,url: employer_memberships_path(@membership.employer_id) do |form|%>
   <%# <% @employer_name = @membership.find_employer(current_user.id)%> 
-    <%= form.label :user_id, "User Id :"%>
+    <%= form.label :user_id, "User  :"%>
     <%= form.select :user_id, @user_name%><br><br>
     <div>
       <%= form.label :role_id, "Role :"%>

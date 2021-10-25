@@ -32,7 +32,7 @@ class ReportsController < ApplicationController
       end
     end
     if @report.save
-      redirect_to root_path, notice: "#{@candidate.name} have created a report"
+      redirect_to employer_candidates_path, notice: "#{@candidate.name} have created a report"
     else
       render "new"
     end 
@@ -44,6 +44,10 @@ class ReportsController < ApplicationController
     @check = @candidate.reports.check_status.blank?
   end
   
+  def set_employer
+    @employer = Employer.joins(:candidates).where(candidates.id:  )
+  end
+
   def get_candidate
     @candidate = Candidate.find(params[:candidate_id])
   end  

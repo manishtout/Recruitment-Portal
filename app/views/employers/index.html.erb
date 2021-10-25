@@ -1,10 +1,15 @@
 <h2> Employers </h2>
 <ul>
 <% @employers.each do |employer|%>
+  <% if can? :read, employer%>
   <div class="row" >
     <div class="col-md-2"><li><h4><%= employer.name%></h4></li></div>
-      <div class="col-md-2"><%=link_to "Show" ,employer_path(employer.id), class: "btn btn-outline-info"%></div>
+    <div class="col-md-2"><%=link_to "Show" ,employer_path(employer.id), class: "btn btn-outline-info"%></div>
+    <div class="col-md-2"><%=link_to "Candidates", employer_candidates_path(employer.id), class: "btn btn-outline-primary"%>
   </div>
   <br>
+  <% end %>
 <% end %>  
 </ul>
+
+  

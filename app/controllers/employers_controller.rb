@@ -1,8 +1,5 @@
 class EmployersController < ApplicationController
-  # load_and_authorize_resource
-
   before_action :employer_params, only: [:create]
-  before_action :authenticate_user!
 
   def index
     @employers = Employer.all  
@@ -10,12 +7,8 @@ class EmployersController < ApplicationController
 
   def show
     @employer = Employer.find(params[:id])
-    begin
-      @user_role = @employer.find_authorize_user_role(@employer.id)
-      authorize! :show, @employer
-    rescue
-      @user_role = @employer.find_user_role(@employer.id, current_user.id)
-    end
+    authorize! :read, @employer
+    @user_role = @employer.find_authorize_user_role(@employer.id)
   end
 
   def new
@@ -23,10 +16,13 @@ class EmployersController < ApplicationController
   end
 
   def create
-    if @employer = Employer.create(employer_params)  
+    @employer = Employer.new(employer_params) 
+    if @employer.save
       @role = Role.find_by(character: "Admin")
-      Membership.create(employer_id: @employer.id, user_id: current_user.id, role_id: @role.id)
+      @role.memberships.create(employer_id: @employer.id, user_id: current_user.id)
       redirect_to root_path
+    else
+      render "new"
     end
   end
 

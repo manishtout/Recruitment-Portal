@@ -1,4 +1,4 @@
-<%=form_with model: @candidate, id: :newForm do |candidate|%>
+<%=form_with model: @candidate, id: :newForm,url: employer_candidates_path do |candidate|%>
 
   <% if @candidate.errors.any?%>
     <ul>

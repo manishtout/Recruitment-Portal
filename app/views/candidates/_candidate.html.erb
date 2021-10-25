@@ -1,22 +1,26 @@
 <% if @candidates.present?%>
-  <h2>Candidates</h2>
+  
   
     <head>
-      <h4>
-        <div class="row">
-          <div class="col-md-1">Name</div>
-          <div class="col-md-2">email</div>
-          <div class="col-md-1">First Round</div>      
-          <div class="col-md-1">Second Round</div>  
-          <div class="col-md-1">Final Round</div>  
-          <div class="col-md-2"><button type="button" id="destroy_candidate" class = "btn btn-outline-danger">Destroy</button></div>
+      <h6>
+        <div class="row" id="search_row">
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-1">Name</div>
+            <div class="col-md-2">Email</div>
+            <div class="col-md-2">Created_by</div>
+            <div class="col-md-1">First Round</div>      
+            <div class="col-md-1">Second Round</div>  
+            <div class="col-md-1">Final Round</div>  
+            <div class="col-md-2"><button type="button" id="destroy_candidate" class = "btn btn-outline-danger">Destroy</button></div>
+          </div>  
         </div>
-      </h4>
+      </h6>
       <script>
         $(function(){
           // var event = $("#accordion").accordion("accordion", "check")
-          $("#accordion").accordion();
-          $("#accordion").find('input[type="checkbox"]').on("click", function(event) {
+          $(".accordion").accordion();
+          $(".accordion").find('input[type="checkbox"]').on("click", function(event) {
             event.preventDefault();
             event.stopPropagation();
             setTimeout(function() {
@@ -38,19 +42,19 @@
             data: {"checkbox" :text }
             });
             alert("bye")
-
         })
       </script>
     </head>      
 
     <body>     
-      <div id="accordion">  
+      <div class="accordion">  
         <% @candidates.uniq.each do |candidate| %>      
           <div class="row" id="row_<%= candidate.id%>">                  
             <div class="row" id ="item">
               <div class="col-md-1"><input type="checkbox" name=<%= candidate.name%> value=<%=candidate.id%> id="check" ></div>
               <div class="col-md-1"><%= candidate.name %></div>
               <div class="col-md-2"><%= candidate.email %></div> 
+              <div class="col-md-2"><%= current_user.email%></div>
               <% flag = 3 %>
               <%candidate.reports.each do |r|%>
                 <div class="col-md-1"><%= r.status%></div>
@@ -64,7 +68,7 @@
              
               <% if candidate.reports.where(status: "Fail").blank? %>
                 <% if candidate.reports.where(interview_number: "Final").blank?%>
-                  <div class="col-md-2"><%= link_to "Create New Report", new_candidate_report_path(candidate.id), :class => "btn btn-outline-success", target: :_blank %></div>
+                  <div class="col-md-2" class="create_report"><%= link_to "Create New Report", new_candidate_report_path(candidate.id), :class => "btn btn-outline-success", target: :_blank %></div>
                 <% end %> 
               <% end %>
             </div>

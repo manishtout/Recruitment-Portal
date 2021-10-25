@@ -1,4 +1,9 @@
 <%= form_with model: @employer do|employer|%>
+  <% if @employer.errors.any? %>
+    <%@employer.errors.full_messages.each do |message|%>
+      <li><%= message %></li>
+    <% end %>  
+  <% end %>  
   Name:
   <%= employer.text_field :name%><br>
   Email:

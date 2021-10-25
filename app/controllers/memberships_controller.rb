@@ -1,9 +1,8 @@
 class MembershipsController < ApplicationController
-  before_action :get_employer
-
-  def index
-    @memberships = Membership.all
-  end
+  load_and_authorize_resource :employer
+  load_and_authorize_resource :membership, through: :employer
+  before_action :get_employer 
+  before_action :member_params
 
   def new
     @roles = Role.all
@@ -25,7 +24,8 @@ class MembershipsController < ApplicationController
   private
   
   def member_params   
-    params.require(:membership).permit(:user_id, :employer_id, :role_id)
+    debugger
+    params.require(:membership).permit(:user_id, :role_id)
   end
 
   def get_employer

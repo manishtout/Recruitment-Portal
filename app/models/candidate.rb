@@ -1,4 +1,5 @@
 class Candidate < ApplicationRecord
+  belongs_to :employer
   belongs_to :user
   has_many :reports, dependent: :destroy
   has_one_attached :document_pdf
@@ -19,5 +20,9 @@ class Candidate < ApplicationRecord
       end  
     end
   end  
+
+  # def find_employer_name
+    
+  # end
 end
 
